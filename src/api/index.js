@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'http://jswrap.ivyro.net/restapi/',
+  baseURL: "https://jsonplaceholder.typicode.com",
   timeout: 1000,
 });
 const request = (method, url, params) => {
@@ -12,50 +12,62 @@ const request = (method, url, params) => {
   });
 };
 export const board = {
-  FETCH_BOARD({ bid, kword }) {
-    return request('GET', `boardDataList.php`, { bid, kword });
+  FETCH_BOARD({ kword }) {
+    return request("GET", `/posts`);
   },
   DETAIL_BOARD(payload) {
-    return request('GET', `boardDataDetail.php`, payload);
+    return request("GET", `/posts`, payload);
   },
   INSERT_BOARD(payload) {
     payload.wr_content = encodeURIComponent(payload.wr_content);
-    return request('GET', `boardDataInsert.php`, payload);
+    return request("POST", `/posts`, payload);
   },
   UPDATE_BOARD(payload) {
     payload.wr_content = encodeURIComponent(payload.wr_content);
-    return request('GET', `boardDataUpdate.php`, payload);
+    return request("PUT", `/posts`, payload);
   },
   DELETE_BOARD(payload) {
-    return request('GET', `boardDataDelete.php`, payload);
+    return request("DELETE", `/posts`, payload);
   },
   UPDATE_POS_BOARD(payload) {
-    return request('GET', `boardPosDataUpdate.php`, payload);
+    return request("PUT", `/posts`, payload);
   },
 };
 export const shop = {
   FETCH_SHOPPING({ kword, ls, la }) {
-    return request('GET', `shopDataList.php`, { kword, ls, la });
+    return request("GET", `/posts`, { kword });
   },
   DETAIL_SHOPPING({ it_id }) {
-    return request('GET', `shopDataDetail.php`, { it_id });
+    return request("GET", `/posts`, { it_id });
   },
   FETCH_CART() {
-    return request('GET', `shopDataCartList.php`);
+    return new Promise((resolve) => {
+      resolve(console.log("FETCH_CART"));
+    });
   },
   INSERT_CART(payload) {
-    return request('GET', `shopDataCartInsert.php`, payload);
+    return new Promise((resolve) => {
+      resolve(console.log("INSERT_CART"));
+    });
   },
   DELETE_CART({ ct_id }) {
-    return request('GET', `shopDataCartDelete.php`, { ct_id });
+    return new Promise((resolve) => {
+      resolve(console.log("DELETE_ALL_CART"));
+    });
   },
   DELETE_ALL_CART() {
-    return request('GET', `shopDataCartDelete.php`);
+    return new Promise((resolve) => {
+      resolve(console.log("DELETE_ALL_CART"));
+    });
   },
   FETCH_SHOP_HIT_ITEM() {
-    return request('GET', `shopDataInterestHit.php`);
+    return new Promise((resolve) => {
+      resolve(console.log("FETCH_SHOP_HIT_ITEM"));
+    });
   },
   FETCH_SHOP_PRICE_ITEM() {
-    return request('GET', `shopDataInterestPrice.php`);
+    return new Promise((resolve) => {
+      resolve(console.log("FETCH_SHOP_PRICE_ITEM"));
+    });
   },
 };

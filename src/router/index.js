@@ -12,10 +12,10 @@ const routePages = {
   boardview: () => import("@/views/BBSView.vue"),
   boardwrite: () => import("@/views/BBSWrite.vue"),
   boardupdate: () => import("@/views/BBSUpdate.vue"),
-  memo: () => import("@/views/Home.vue"),
-  shopping: () => import("@/views/Home.vue"),
-  shoppingview: () => import("@/views/Home.vue"),
-  interestitem: () => import("@/views/Home.vue"),
+  memo: () => import("@/views/Memo.vue"),
+  // shopping: () => import("@/views/Shopping.vue"),
+  // shoppingview: () => import("@/views/ShoppingView.vue"),
+  // interestitem: () => import("@/views/InterestItem.vue"),
   notFoundPage: () => import("@/views/NotFoundPage.vue"),
 };
 const history = createWebHistory();
@@ -93,25 +93,25 @@ const router = createRouter({
       meta: {
         requiresAuth: true,
       },
-      component: routePages.home,
+      component: routePages.memo,
     },
-    {
-      path: "/shopping",
-      name: "shopping",
-      props: true,
-      meta: {
-        requiresAuth: true,
-      },
-      component: routePages.home,
-    },
-    {
-      path: "/interest-item",
-      name: "interestitem",
-      meta: {
-        requiresAuth: true,
-      },
-      component: routePages.home,
-    },
+    // {
+    //   path: "/shopping",
+    //   name: "shopping",
+    //   props: true,
+    //   meta: {
+    //     requiresAuth: true,
+    //   },
+    //   component: routePages.shopping,
+    // },
+    // {
+    //   path: "/interest-item",
+    //   name: "interestitem",
+    //   meta: {
+    //     requiresAuth: true,
+    //   },
+    //   component: routePages.interestitem,
+    // },
     {
       path: "/:catchAll(.*)",
       name: "notFoundPage",

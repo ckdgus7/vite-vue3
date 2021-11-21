@@ -3,7 +3,7 @@
     <div class="board">
       <div class="board-header">
         <BoardTitle
-          ><template slot="board_title"
+          ><template #board_title
             >메모장 (dragula : Card를 drag&drop 해보세요)</template
           ></BoardTitle
         >
@@ -42,19 +42,19 @@
 
 <script>
 import BoardTitle from "../components/board/title.vue";
-import { ref, computed, onUpdated } from "vue";
-import { injectStore } from "../composition_func/common/storeProvider.js";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 import { replaceAll } from "../utils/index.js";
-import dragula from "dragula";
-import "dragula/dist/dragula.css";
+// import dragula from "dragula";
+// import "dragula/dist/dragula.css";
 export default {
   components: {
     BoardTitle,
   },
-  setup(props, { root: { $el } }) {
-    const { getters, actions } = injectStore();
+  setup(props) {
+    const store = useStore();
     const drakeList = ref(null);
-    const GET_BOARD_LIST = computed(() => getters.GET_BOARD_LIST);
+    const GET_BOARD_LIST = computed(() => store.getters.GET_BOARD_LIST);
 
     const updateBoardData = (targetCard) => {
       const bid = "bbs";
@@ -69,48 +69,48 @@ export default {
       return cont;
     };
 
-    onUpdated(() => {
-      if (drakeList.value) drakeList.value.destroy();
-      drakeList.value = dragula([...$el.querySelectorAll(".list-section")]).on(
-        "drop",
-        (el, wrapper) => {
-          const targetCard = {
-            id: el.firstChild.dataset.cardId * 1,
-            pos: 65535,
-          };
-          let prevCard = null;
-          let nextCard = null;
+    // onUpdated(() => {
+    //   if (drakeList.value) drakeList.value.destroy();
+    //   drakeList.value = dragula([...$el.querySelectorAll(".list-section")]).on(
+    //     "drop",
+    //     (el, wrapper) => {
+    //       const targetCard = {
+    //         id: el.firstChild.dataset.cardId * 1,
+    //         pos: 65535,
+    //       };
+    //       let prevCard = null;
+    //       let nextCard = null;
 
-          Array.from(wrapper.querySelectorAll(".list")).forEach(
-            (el, idx, arr) => {
-              const cardId = el.dataset.cardId * 1;
-              if (targetCard.id === cardId) {
-                prevCard =
-                  idx > 0
-                    ? {
-                        pos: arr[idx - 1].dataset.cardPos * 1,
-                      }
-                    : null;
-                nextCard =
-                  idx < arr.length - 1
-                    ? {
-                        pos: arr[idx + 1].dataset.cardPos * 1,
-                      }
-                    : null;
-              }
-            }
-          );
+    //       Array.from(wrapper.querySelectorAll(".list")).forEach(
+    //         (el, idx, arr) => {
+    //           const cardId = el.dataset.cardId * 1;
+    //           if (targetCard.id === cardId) {
+    //             prevCard =
+    //               idx > 0
+    //                 ? {
+    //                     pos: arr[idx - 1].dataset.cardPos * 1,
+    //                   }
+    //                 : null;
+    //             nextCard =
+    //               idx < arr.length - 1
+    //                 ? {
+    //                     pos: arr[idx + 1].dataset.cardPos * 1,
+    //                   }
+    //                 : null;
+    //           }
+    //         }
+    //       );
 
-          if (!prevCard && nextCard) targetCard.pos = nextCard.pos / 2;
-          else if (!nextCard && prevCard) targetCard.pos = prevCard.pos * 2;
-          else if (nextCard && prevCard)
-            targetCard.pos = (prevCard.pos + nextCard.pos) / 2;
-          updateBoardData(targetCard);
-        }
-      );
-    });
+    //       if (!prevCard && nextCard) targetCard.pos = nextCard.pos / 2;
+    //       else if (!nextCard && prevCard) targetCard.pos = prevCard.pos * 2;
+    //       else if (nextCard && prevCard)
+    //         targetCard.pos = (prevCard.pos + nextCard.pos) / 2;
+    //       updateBoardData(targetCard);
+    //     }
+    //   );
+    // });
 
-    actions.FETCH_BOARD[0]({ bid: 1 });
+    store.dispatch("FETCH_BOARD", { bid: 1 });
 
     return {
       GET_BOARD_LIST,

@@ -4,7 +4,7 @@
       <div id="container_wr">
         <div id="container">
           <BoardTitle
-            ><template slot="board_title"
+            ><template #board_title
               >[ {{ GET_BOARD_LIST.board_title }} ]</template
             ></BoardTitle
           >
@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
-import BoardTitle from '../components/board/title.vue';
-import BoardTop from '../components/board/top.vue';
-import BoardList from '../components/board/list.vue';
-import BoardBottom from '../components/board/bottom.vue';
+import { computed } from "vue";
+import { useStore } from "vuex";
+import BoardTitle from "../components/board/title.vue";
+import BoardTop from "../components/board/top.vue";
+import BoardList from "../components/board/list.vue";
+import BoardBottom from "../components/board/bottom.vue";
 
 export default {
   components: {
@@ -37,9 +37,9 @@ export default {
   setup() {
     const store = useStore();
     const GET_BOARD_LIST = computed(() => {
-      return store.getters['GET_BOARD_LIST'];
+      return store.getters["GET_BOARD_LIST"];
     });
-    store.dispatch('FETCH_BOARD', { bid: 1 });
+    store.dispatch("FETCH_BOARD", { bid: 1 });
     return {
       GET_BOARD_LIST,
     };
