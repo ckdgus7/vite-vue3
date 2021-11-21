@@ -1,0 +1,24 @@
+{
+  "name": "vite-vue",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.16",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.3",
+    "axios": "^0.24.0",
+    "chart.js": "^3.6.0",
+    "dragula": "^3.7.3",
+    "lodash": "^4.17.21",
+    "vite": "^2.6.4",
+    "vue-chartjs": "^3.5.1",
+    "vue-infinite-scroll": "^2.0.2"
+  }
+}
